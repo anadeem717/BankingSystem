@@ -16,7 +16,6 @@ using namespace std;
     - 1 uppercase leter
 */
 bool isStrongPassword(const string& password) {
-
     // Password must be at least 10 characters long
     if (password.length() < 10) {
         return false; 
@@ -25,17 +24,17 @@ bool isStrongPassword(const string& password) {
     int numDigit = 0; 
     bool upperCase = false;
 
-    // loop that iterates through every character in password and checks mentioned password rules. 
-    for (char i : password) {
-        if (isdigit(i)) {
+    // loop that iterates through each character in password and checks password rules. 
+    for (int i = 0; i < password.length(); i++) {
+        char charCurrent = password[i];
+
+        if (isdigit(charCurrent)) {
             numDigit++;
         } 
-
-        else if (isupper(i)) {
+        else if (isupper(charCurrent)) {
             upperCase = true;
         } 
-
-        else if (ispunct(i) || i == ' ' || i == '\t') {
+        else if (ispunct(charCurrent) || charCurrent == ' ' || charCurrent == '\t') {
             specialChar = true;
         }
     }
@@ -43,6 +42,7 @@ bool isStrongPassword(const string& password) {
     // if the password meets the criteria returns true, otherwise false
     return (specialChar && numDigit >= 2 && upperCase);
 }
+
 
 int main() {
 
@@ -74,7 +74,7 @@ int main() {
             // following loop will keep iterating until a strong password is created. 
             do {
                 cout << "Create a password:" << endl;
-                cout << "Password must contain:" << endl; << "- At least 10 characters" << "- At least 1 special character" << "- At least 1 uppercase letter" << "- At least 2 numbers" << endl;
+                cout << "Password must contain:" << endl << "- At least 10 characters" << endl << "- At least 1 special character" << endl << "- At least 1 uppercase letter" << endl << "- At least 2 numbers" << endl;
                 cin >> userPass;
                 cout << endl;
 
