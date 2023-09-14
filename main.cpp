@@ -7,14 +7,49 @@
 
 using namespace std;
 
-// Function declaration for isStrongPassword
-bool isStrongPassword(const string& password);
+/*
+    Function that checks to see if the password user created is strong to help ensure a secured account. 
+    Password must contain at least:
+    - 10 characters
+    - 1 special character
+    - 2 numbers
+    - 1 uppercase leter
+*/
+bool isStrongPassword(const string& password) {
+
+    // Password must be at least 10 characters long
+    if (password.length() < 10) {
+        return false; 
+    }
+    bool specialChar = false; 
+    int numDigit = 0; 
+    bool upperCase = false;
+
+    // loop that iterates through every character in password and checks mentioned password rules. 
+    for (char i : password) {
+        if (isdigit(i)) {
+            numDigit++;
+        } 
+
+        else if (isupper(i)) {
+            upperCase = true;
+        } 
+
+        else if (ispunct(i) || i == ' ' || i == '\t') {
+            specialChar = true;
+        }
+    }
+
+    // if the password meets the criteria returns true, otherwise false
+    return (specialChar && numDigit >= 2 && upperCase);
+}
 
 int main() {
-    srand(static_cast<unsigned>(time(0)));
-    vector<Account> accounts;
-    int choice = 0;
 
+    vector<Account> allAccounts; // array to store accounts registered 
+    int choice = 0; // options for menu
+
+    // runs the main program until the user quits out of program
     while (true) {
         cout << "********** Welcome to ARNAD Bank **********" << endl;
         cout << "1. Register an account" << endl;
@@ -23,6 +58,7 @@ int main() {
         cout << "Enter your choice: ";
         cin >> choice;
 
+        // Process for registering an account...
         if (choice == 1) {
             string firstName, lastName, userName, userPass;
             double balance;
@@ -35,28 +71,34 @@ int main() {
             cin >> userName;
             cout << endl;
 
+            // following loop will keep iterating until a strong password is created. 
             do {
                 cout << "Create a password:" << endl;
-                cout << "Password criteria: at least 10 characters, 1 special character, 1 uppercase letter, and 2 numbers: ";
+                cout << "Password must contain:" << endl; << "- At least 10 characters" << "- At least 1 special character" << "- At least 1 uppercase letter" << "- At least 2 numbers" << endl;
                 cin >> userPass;
                 cout << endl;
+
+                // if password is weak, will restart the loop and program will ask user to try again. 
                 if (!isStrongPassword(userPass)) {
                     cout << "INVALID PASSWORD... Please try again to make a strong password." << endl << endl;
                     continue;
                 }
-                cout << "PASSWORD VALID. " << endl;
+                cout << "PASSWORD VALID... " << endl;
             } while (!isStrongPassword(userPass));
 
+            // deposit money for inital balance. 
             cout << "How much would you like to initially deposit into your account?: ";
             cin >> balance;
             cout << endl;
 
-            accounts.push_back(Account(firstName, lastName, userName, userPass, balance));
+            // Account for user is added to array of all accounts 
+            // ***Have to work on saving registered accounts even when program is terminated...***
+            allAccounts.push_back(Account(firstName, lastName, userName, userPass, balance));
             cout << "**************************************************" << endl;
             cout << "Account for " << firstName << " " << lastName << " successfully registered." << endl;
             cout << "**************************************************" << endl << endl;
         }
-        // Inside the main function's choice == 2 block
+        // if user chooses to login, which will then allow them to access main banking system. 
         else if (choice == 2) {
             string attemptUsername, attemptPass;
             cout << "Enter your username: ";
@@ -64,19 +106,27 @@ int main() {
             cout << "Enter your password: ";
             cin >> attemptPass;
             cout << endl;
-
-            for (Account& account : accounts) {
+            
+            // iterates through vector and checks to see if username / pasword matches an account in array
+            for (Account& account : allAccounts) {
                 if (!account.validateLogin(attemptUsername, attemptPass)) {
                     cout << "Incorrect login, please try again." << endl << endl;
                 }
                 
+                // if user successfully logged in they can now access main banking system...
                 else if (account.validateLogin(attemptUsername, attemptPass)) {
                     cout << "*******************" << endl;
                     cout << "Login successful..." << endl;
                     cout << "*******************" << endl << endl;
 
                     while (choice != 4) {
-                        // Display the menu for the logged-in user
+                        /*
+                        Main banking system for user:
+                        1. User can add funds to account
+                        2. User can withdraw funds from account
+                        3. Account info is displayed (account number, balance, and first/last name)
+                        4. Returns to registration / login menu
+                        */ 
                         cout << "********** Main Menu **********" << endl;
                         cout << "1. Deposit" << endl;
                         cout << "2. Withdraw" << endl;
@@ -119,7 +169,7 @@ int main() {
                         }
                     }
 
-                    break; // Exit the loop after a successful login
+                    break; 
                 }
             }
         } 
@@ -137,30 +187,3 @@ int main() {
     return 0;
 }
 
-// Function definition for isStrongPassword
-bool isStrongPassword(const string& password) {
-    if (password.length() < 10) {
-        return false; // Password is not at least 10 characters long
-    }
-
-    bool specialChar = false;
-    int numDigit = 0;
-    bool upperCase = false;
-
-    for (char c : password) {
-        if (isdigit(c)) {
-            numDigit++;
-        } 
-
-        else if (isupper(c)) {
-            upperCase = true;
-        } 
-
-        else if (ispunct(c) || c == ' ' || c == '\t') {
-            specialChar = true;
-        }
-    }
-
-    // Check if the password meets the criteria
-    return (specialChar && numDigit >= 2 && upperCase);
-}
