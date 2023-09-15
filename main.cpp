@@ -46,6 +46,8 @@ bool isStrongPassword(const string& password) {
 
 int main() {
 
+    // ***WORK ON MODULARIZING main() BY CREATING FUNCTIONS FOR MENU AND LOGIN***
+
     vector<Account> allAccounts; // array to store accounts registered 
     int choice = 0; // options for menu
 
