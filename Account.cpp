@@ -1,7 +1,6 @@
 #include "Account.h"
 #include <iostream>
 #include <cstdlib>
-#include <ctime>
 using namespace std; 
 
 // start assigning account numbers from 10000. Example, would be AN10001, AN10002, etc.
