@@ -1,7 +1,6 @@
 #include <iostream>
 #include <vector>
 #include <cstdlib>
-#include <ctime>
 #include <string>
 #include "Account.h" // Include your Account class header here
 
@@ -45,8 +44,6 @@ bool isStrongPassword(const string& password) {
 
 
 int main() {
-
-    // ***WORK ON MODULARIZING main() BY CREATING FUNCTIONS FOR MENU AND LOGIN***
 
     vector<Account> allAccounts; // array to store accounts registered 
     int choice = 0; // options for menu
