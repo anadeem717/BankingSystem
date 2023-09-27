@@ -4,6 +4,8 @@ This is a banking system project implemented in C++.
 
 Built upon my the Simple Bank Account project to make a more advanced and secure system. 
 
+Plan to work on modularizing main.cpp and implementing more features for the banking system.
+
 ## Overview
 
 This project is a basic banking system that allows users to:
